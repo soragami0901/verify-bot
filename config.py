@@ -12,6 +12,7 @@ GUILD_ID = int(os.getenv("GUILD_ID", 0))
 
 # Dynamic roles are now used, so these are removed/ignored
 NGROK_DOMAIN = os.getenv("NGROK_DOMAIN")
+NGROK_AUTH_TOKEN = os.getenv("NGROK_AUTH_TOKEN")
 ROOT_ADMIN_ID = int(os.getenv("ROOT_ADMIN_ID", 0))
 
 # Turso Cloud SQLite
