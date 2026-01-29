@@ -185,6 +185,19 @@ class AuthCog(commands.Cog):
         await storage.remove_admin(user.id)
         await interaction.response.send_message(f"{user.mention} の管理者権限を削除しました。", ephemeral=True)
 
+    # --- Admin Helper Commands ---
+
+    @discord.app_commands.command(name="sync", description="スラッシュコマンドをDiscordに同期します(管理者のみ)")
+    async def sync_commands(self, interaction: discord.Interaction):
+        if not await self.is_bot_admin(interaction): return
+        
+        await interaction.response.defer(ephemeral=True)
+        try:
+            await self.bot.tree.sync()
+            await interaction.followup.send("スラッシュコマンドの同期が完了しました！反映まで時間がかかる場合があります。")
+        except Exception as e:
+            await interaction.followup.send(f"同期に失敗しました: {e}")
+
     # --- Join Command ---
     
     @discord.app_commands.command(name="join", description="連携済みのユーザーをサーバーに参加させます(指定なしで全員)")
