@@ -9,7 +9,7 @@ client = None
 async def init_storage():
     global client
     if client is None:
-        client = libsql_client.create_client_sync(
+        client = libsql_client.create_client(
             url=config.TURSO_URL,
             auth_token=config.TURSO_TOKEN
         )
