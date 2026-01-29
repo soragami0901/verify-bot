@@ -13,6 +13,10 @@ def setup_server(bot):
     app["bot"] = bot
     return app
 
+@routes.get('/')
+async def index(request):
+    return web.Response(text="Bot is running!", content_type='text/plain')
+
 @routes.get('/callback')
 async def callback(request):
     code = request.query.get('code')
