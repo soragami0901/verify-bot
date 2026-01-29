@@ -22,14 +22,8 @@ class AuthBot(commands.Bot):
         await storage.init_storage()  # Init JSON storage
         await self.load_extension("cogs.auth")
         
-        # Sync Slash Commands
-        try:
-            # Sync globally to allow multi-service support
-            # Note: Global sync can take up to an hour to propagate in some cases, but instant for dev
-            await self.tree.sync()
-            print("Slash commands synced globally.")
-        except Exception as e:
-            print(f"Failed to sync slash commands: {e}")
+        # Sync Slash Commands is now moved to manual command to avoid rate limits on Render
+        print("Bot is ready. Use /sync (admin only) if you need to update commands.")
         
         # Start Web Server
         app = server.setup_server(self)
