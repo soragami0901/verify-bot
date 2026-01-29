@@ -37,6 +37,10 @@ class AuthBot(commands.Bot):
 
         # Start ngrok
         try:
+            # Set auth token if provided
+            if config.NGROK_AUTH_TOKEN:
+                ngrok.set_auth_token(config.NGROK_AUTH_TOKEN)
+            
             # Open a HTTP tunnel on the specified port
             if config.NGROK_DOMAIN:
                 public_url = ngrok.connect(port, domain=config.NGROK_DOMAIN).public_url
