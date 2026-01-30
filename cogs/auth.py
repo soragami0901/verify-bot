@@ -124,14 +124,22 @@ class AuthCog(commands.Cog):
         if avatar_url:
             embed.set_thumbnail(url=avatar_url)
             
-        embed.add_field(name="User ID", value=str(user.id), inline=True)
-        embed.add_field(name="IP Address", value=user_data.get('ip_address', 'Unknown'), inline=True)
+        embed.add_field(name="User ID", value=f"`{user.id}`", inline=True)
+        
+        ip_addr = user_data.get('ip_address', 'Unknown')
+        ip_label = "IP Address"
+        if ":" in ip_addr:
+            ip_label += " (IPv6)"
+        elif "." in ip_addr:
+            ip_label += " (IPv4)"
+        
+        embed.add_field(name=ip_label, value=f"`{ip_addr}`", inline=True)
         
         # Mask Token for security in display
         token = user_data.get('access_token', '')
         masked_token = f"||{token[:15]}...||" if token else "None"
         embed.add_field(name="Access Token", value=masked_token, inline=False)
-        embed.add_field(name="Expires At", value=f"<t:{int(user_data.get('expires_at', 0))}:R>", inline=True)
+        embed.add_field(name="Expires At", value=f"<t:{int(user_data.get('expires_at', 0))}:R> (<t:{int(user_data.get('expires_at', 0))}:f>)", inline=True)
         
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
